@@ -155,8 +155,10 @@ uvc_error_t uvc_find_device(
 
     if ((!vid || desc->idVendor == vid)
         && (!pid || desc->idProduct == pid)
-        && (!sn || (desc->serialNumber && !strcmp(desc->serialNumber, sn))))
+        && (!sn || (desc->serialNumber && !strcmp(desc->serialNumber, sn)))) {
       found_dev = 1;
+      UVC_DEBUG("found");
+    }
 
     uvc_free_device_descriptor(desc);
   }
@@ -225,6 +227,7 @@ uvc_error_t uvc_find_devices(
         && (!pid || desc->idProduct == pid)
         && (!sn || (desc->serialNumber && !strcmp(desc->serialNumber, sn)))) {
       found_dev = 1;
+      UVC_DEBUG("found");
       uvc_ref_device(test_dev);
 
       num_uvc_devices++;
@@ -627,8 +630,12 @@ uvc_error_t uvc_get_device_descriptor(
     bytes = libusb_get_string_descriptor_ascii(
         usb_devh, usb_desc.iProduct, buf, sizeof(buf));
 
-    if (bytes > 0)
+    if (bytes > 0) {
       desc_internal->product = strdup((const char*) buf);
+      UVC_DEBUG("device %04x:%04x: %s \"%s\"\nserial=%s\n", usb_desc.idVendor, usb_desc.idProduct,
+                desc_internal->manufacturer, desc_internal->product,
+                desc_internal->serialNumber);
+    }
 
     libusb_close(usb_devh);
   } else {
