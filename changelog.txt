@@ -1,3 +1,10 @@
+Unreleased
+----------
+
+Bug fixes:
+  - Accept device-negotiated stream payload sizes; endpoint capacity is
+    validated when streaming starts.
+
 Changes in 0.0.7 (2023-03-31)
 ----------------
 

@@ -595,9 +595,10 @@ uvc_error_t uvc_get_still_ctrl_format_size(
 static int _uvc_stream_params_negotiated(
   uvc_stream_ctrl_t *required,
   uvc_stream_ctrl_t *actual) {
+    /* The device negotiates dwMaxPayloadTransferSize for the selected mode.
+     * uvc_stream_start() validates that an endpoint can carry the result. */
     return required->bFormatIndex == actual->bFormatIndex &&
-    required->bFrameIndex == actual->bFrameIndex &&
-    required->dwMaxPayloadTransferSize >= actual->dwMaxPayloadTransferSize;
+           required->bFrameIndex == actual->bFrameIndex;
 }
 
 /** @internal
