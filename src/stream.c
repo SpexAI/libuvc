@@ -1547,6 +1547,7 @@ void uvc_stream_close(uvc_stream_handle_t *strmh) {
 
   if (strmh->frame.data)
     free(strmh->frame.data);
+  free(strmh->frame.metadata);
 
   free(strmh->outbuf);
   free(strmh->holdbuf);
